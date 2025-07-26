@@ -1,0 +1,64 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+model User {
+  id         String    @id @default(uuid())
+  name       String
+  email      String?   @unique
+  phone      String?
+  title      String?
+  image      String?
+  address    String?
+  password String
+  role     Role     @default(MEMBER)
+  uniqueId   String    @unique
+  payments   Payment[]
+  createdAt  DateTime  @default(now())
+}
+
+model Post {
+  id         String    @id @default(uuid())
+  title      String
+  content    String
+  mediaUrl   String?
+  mediaType  String?
+  createdAt  DateTime  @default(now())
+}
+
+model Blog {
+  id         String    @id @default(uuid())
+  title      String
+  content    String
+  youtubeUrl String?
+  image      String?
+  createdAt  DateTime  @default(now())
+}
+
+model Payment {
+  id          String   @id @default(uuid())
+  userId      String
+  title       String
+  description String
+  amount      Float
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Admin {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+}
+
