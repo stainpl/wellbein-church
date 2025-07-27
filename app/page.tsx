@@ -10,7 +10,6 @@ import Footer from './components/Footer'
 
 
 export default function Home() {
-  const [showModal, setShowModal] = useState(false)
 
   return (
     <> 
