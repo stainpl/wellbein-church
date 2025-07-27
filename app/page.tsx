@@ -69,11 +69,11 @@ export default function Home() {
             </form>
 
             <div className="flex space-x-4 mt-4 text-xl">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-twitter"></i></a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-youtube"></i></a>
-            </div>
+  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
+  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+  <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
+</div>
           </div>
         </div>
 
