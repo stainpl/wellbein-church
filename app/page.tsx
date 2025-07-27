@@ -6,7 +6,7 @@ import Hero from './components/Hero'
 import Slider from './components/Slider'
 import FancyCard from './components/FancyCard'
 import Footer from './components/Footer'
-import { FaUserShield } from 'react-icons/fa'
+
 
 
 export default function Home() {

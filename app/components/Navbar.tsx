@@ -2,6 +2,8 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+
 import {
   FaUsers, FaHistory, FaPhone, FaMusic, FaPlayCircle,
   FaTv, FaVideo, FaImage, FaCalendarAlt, FaStar,
@@ -88,7 +90,13 @@ export default function Navbar() {
       <nav ref={containerRef} className="relative flex items-center justify-between px-6 py-4">
         {/* Logo */}
         <Link href="/" className="z-40">
-          <img src="/logo1.png" alt="Logo" className="h-10" />
+          <Image
+            src="/logo1.png"
+            alt="Logo"
+            width={40} // Adjust based on your logo's actual width
+            height={40} // Adjust based on your logo's actual height
+            priority // Optimize for LCP since it's in the navbar
+          />
         </Link>
 
         {/* Desktop Menu */}

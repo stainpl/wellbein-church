@@ -1,6 +1,6 @@
-// app/components/Slider.tsx
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image'; // Import Image
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
 const images = ['/hero1.jpg', '/hero2.jpg', '/hero3.jpg'];
@@ -9,7 +9,6 @@ export default function Slider() {
   const [idx, setIdx] = useState(0);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Auto‑advance every 5s
   useEffect(() => {
     resetTimeout();
     timeoutRef.current = setTimeout(
@@ -35,19 +34,22 @@ export default function Slider() {
 
   return (
     <div className="relative w-full h-64 md:h-[600px] overflow-hidden">
-      {/* Slides */}
       {images.map((src, i) => (
-        <img
+        <div
           key={i}
-          src={src}
-          alt=""
-          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ${
             i === idx ? 'opacity-100' : 'opacity-0'
           }`}
-        />
+        >
+          <Image
+            src={src}
+            alt={`Slide ${i + 1}`}
+            fill // Use fill to cover the container
+            style={{ objectFit: 'cover' }} // Equivalent to object-cover
+            priority={i === 0} // Prioritize the first image for LCP
+          />
+        </div>
       ))}
-
-      {/* Prev button */}
       <button
         onClick={prev}
         aria-label="Previous Slide"
@@ -55,8 +57,6 @@ export default function Slider() {
       >
         <BsChevronLeft size={24} />
       </button>
-
-      {/* Next button */}
       <button
         onClick={next}
         aria-label="Next Slide"
