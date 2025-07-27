@@ -6,7 +6,7 @@ import Hero from './components/Hero'
 import Slider from './components/Slider'
 import FancyCard from './components/FancyCard'
 import Footer from './components/Footer'
-
+import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa'
 
 
 export default function Home() {
@@ -69,11 +69,11 @@ export default function Home() {
             </form>
 
             <div className="flex space-x-4 mt-4 text-xl">
-  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
-  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
-  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-  <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
-</div>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
+            </div>
           </div>
         </div>
 
