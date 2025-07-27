@@ -1,14 +1,12 @@
-// app/components/Navbar.tsx
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-
 import {
   FaUsers, FaHistory, FaPhone, FaMusic, FaPlayCircle,
   FaTv, FaVideo, FaImage, FaCalendarAlt, FaStar,
   FaGift, FaHandHoldingHeart, FaUserPlus, FaSignInAlt,
-  FaBullseye, FaBible, FaHandsHelping,FaUserShield
+  FaBullseye, FaBible, FaHandsHelping, FaUserShield
 } from 'react-icons/fa';
 
 type MenuKey = 'about' | 'ministries' | 'sermons' | 'events' | 'giving' | 'account';
@@ -70,7 +68,13 @@ const MENU: Record<MenuKey, { label: string; items: { label: string; href: strin
   },
 };
 
-export default function Navbar() {
+
+// Define props interface
+interface NavbarProps {
+  className?: string;
+}
+
+export default function Navbar({ className }: NavbarProps) {
   const [openMenu, setOpenMenu] = useState<MenuKey | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -86,118 +90,101 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-30">
+    <header className={`fixed inset-x-0 top-0 z-30 ${className || ''}`}>
       <nav ref={containerRef} className="relative flex items-center justify-between px-6 py-4">
-        {/* Logo */}
         <Link href="/" className="z-40">
           <Image
             src="/logo1.png"
             alt="Logo"
-            width={40} // Adjust based on your logo's actual width
-            height={40} // Adjust based on your logo's actual height
-            priority // Optimize for LCP since it's in the navbar
+            width={40}
+            height={40}
+            priority
           />
         </Link>
-
-        {/* Desktop Menu */}
-            {/* Desktop Menu */}
-   <ul className="hidden md:flex space-x-8 z-40">
-  {(Object.keys(MENU) as MenuKey[]).map((key, i, arr) => {
-    const isEdge = i >= arr.length - 2;  // last two items
-    return (
-      <li
-  key={key}
-  className="relative group"
-  onMouseEnter={() => setOpenMenu(key)}
-  onMouseLeave={() => setOpenMenu(null)}
->
-  <button className="font-medium">{MENU[key].label}</button>
-
-  {openMenu === key && (
-    <div
-      className={`
-        absolute
-        top-full        /* right below the <li> */
-        ${isEdge ? 'right-0' : 'left-0'}
-      `}
-    >
-      {/* 0px gap: no mt-2 here! */}
-      {/* arrow */}
-      <div
-        className={`
-          absolute
-          ${isEdge ? 'right-6' : 'left-6'}
-          -top-2
-          w-4 h-4
-          bg-blue/60
-          backdrop-blur
-          transform rotate-45
-          shadow-sm
-        `}
-      />
-      {/* dropdown panel */}
-      <div className="bg-black/22 backdrop-blur-md rounded-xl shadow-lg p-4 w-72">
-        {MENU[key].items.map(({ label, href, icon }) => (
-          <Link
-            key={label}
-            href={href}
-            className="flex items-center space-x-3 py-2 px-3 rounded hover:bg-white/10 transition text-white"
-          >
-            <span className="text-xl">{icon}</span>
-            <span>{label}</span>
-          </Link>
-        ))}
-      </div>
-    </div>
-  )}
-</li>
-
-    );
-  })}
-</ul>
-
-        {/* Mobile Menu Button */}
+        <ul className="hidden md:flex space-x-8 z-40">
+          {(Object.keys(MENU) as MenuKey[]).map((key, i, arr) => {
+            const isEdge = i >= arr.length - 2;
+            return (
+              <li
+                key={key}
+                className="relative group"
+                onMouseEnter={() => setOpenMenu(key)}
+                onMouseLeave={() => setOpenMenu(null)}
+              >
+                <button className="font-medium">{MENU[key].label}</button>
+                {openMenu === key && (
+                  <div
+                    className={`
+                      absolute
+                      top-full
+                      ${isEdge ? 'right-0' : 'left-0'}
+                    `}
+                  >
+                    <div
+                      className={`
+                        absolute
+                        ${isEdge ? 'right-6' : 'left-6'}
+                        -top-2
+                        w-4 h-4
+                        bg-blue/60
+                        backdrop-blur
+                        transform rotate-45
+                        shadow-sm
+                      `}
+                    />
+                    <div className="bg-black/22 backdrop-blur-md rounded-xl shadow-lg p-4 w-72">
+                      {MENU[key].items.map(({ label, href, icon }) => (
+                        <Link
+                          key={label}
+                          href={href}
+                          className="flex items-center space-x-3 py-2 px-3 rounded hover:bg-white/10 transition text-white"
+                        >
+                          <span className="text-xl">{icon}</span>
+                          <span>{label}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
         <button className="md:hidden z-40" onClick={() => setMobileOpen((o) => !o)}>
           {mobileOpen ? '✕' : '☰'}
         </button>
-
-        {/* Mobile Panel */}
-        {/* Mobile Panel */}
-           {mobileOpen && (
-            <div className="fixed inset-y-0 right-0 w-3/4 max-w-xs bg-black/60 backdrop-blur-md shadow-lg pt-16 p-6 overflow-auto z-30 text-white">
-              <ul className="space-y-4">
-                  {(Object.keys(MENU) as MenuKey[]).map((key) => (
-                  <li key={key}>
-                   <button
-                className="w-full text-left font-medium flex justify-between items-center"
-            onClick={() => setOpenMenu((cur) => (cur === key ? null : key))}
-              >
-            {MENU[key].label}
-            <span>{openMenu === key ? '−' : '+'}</span>
-          </button>
-          {openMenu === key && (
-            <ul className="mt-2 space-y-2">
-              {MENU[key].items.map(({ label, href, icon }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  className="flex items-center space-x-3 pl-4 py-2 rounded hover:bg-white/10 transition"
-                >
-                  <span className="text-lg">{icon}</span>
-                  <span>{label}</span>
-                </Link>
+        {mobileOpen && (
+          <div className="fixed inset-y-0 right-0 w-3/4 max-w-xs bg-black/60 backdrop-blur-md shadow-lg pt-16 p-6 overflow-auto z-30 text-white">
+            <ul className="space-y-4">
+              {(Object.keys(MENU) as MenuKey[]).map((key) => (
+                <li key={key}>
+                  <button
+                    className="w-full text-left font-medium flex justify-between items-center"
+                    onClick={() => setOpenMenu((cur) => (cur === key ? null : key))}
+                  >
+                    {MENU[key].label}
+                    <span>{openMenu === key ? '−' : '+'}</span>
+                  </button>
+                  {openMenu === key && (
+                    <ul className="mt-2 space-y-2">
+                      {MENU[key].items.map(({ label, href, icon }) => (
+                        <Link
+                          key={label}
+                          href={href}
+                          className="flex items-center space-x-3 pl-4 py-2 rounded hover:bg-white/10 transition"
+                        >
+                          <span className="text-lg">{icon}</span>
+                          <span>{label}</span>
+                        </Link>
+                      ))}
+                    </ul>
+                  )}
+                </li>
               ))}
             </ul>
-          )}
-        </li>
-         ))}
-    </ul>
-  </div>
-)}
-
+          </div>
+        )}
       </nav>
-
-      {/* Pass‑through transparent backdrop */}
       <div className="absolute inset-0 pointer-events-none bg-transparent" />
     </header>
   );
